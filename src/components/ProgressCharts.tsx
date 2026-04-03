@@ -290,7 +290,7 @@ export default function ProgressCharts() {
   const hasAnyData = Object.keys(logs).length > 0;
 
   return (
-    <div className="flex flex-col gap-4 pb-24">
+    <div className="flex flex-col gap-4 pt-4 pb-4">
       {/* Header */}
       <div className="flex items-center gap-3 mb-2">
         <BarChart3 size={24} color={COLORS.accent} />

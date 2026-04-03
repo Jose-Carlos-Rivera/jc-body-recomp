@@ -354,7 +354,7 @@ export default function NutritionTracker({ dailyLog, onUpdate }: NutritionTracke
 
   // =======================================================================
   return (
-    <div className="space-y-5 pb-28">
+    <div className="space-y-5 pt-4 pb-4">
       {/* ================================================================
           1. Daily Macros Summary
           ================================================================ */}

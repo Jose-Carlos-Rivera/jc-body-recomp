@@ -394,7 +394,7 @@ export default function WorkoutTracker({ dailyLog, onUpdate }: WorkoutTrackerPro
   };
 
   return (
-    <div className="space-y-6 pb-24">
+    <div className="space-y-6 pt-4 pb-4">
       {/* ─── Header ─── */}
       <div className="rounded-2xl border border-[#262626] bg-[#141414] p-5">
         <div className="mb-4 flex items-start justify-between">

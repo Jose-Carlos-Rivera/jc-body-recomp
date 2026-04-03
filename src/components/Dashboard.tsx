@@ -177,9 +177,9 @@ export default function Dashboard({ dailyLog, onNavigate }: DashboardProps) {
   }, [todayPlan]);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white pb-28">
+    <div className="bg-[#0a0a0a] text-white pb-4">
       {/* Header */}
-      <div className="px-5 pt-12 pb-4">
+      <div className="pt-4 pb-4">
         <p className="text-neutral-500 text-sm capitalize">{dateStr}</p>
         <h1 className="text-2xl font-bold mt-1">
           Hola, Jose Carlos
@@ -187,7 +187,7 @@ export default function Dashboard({ dailyLog, onNavigate }: DashboardProps) {
       </div>
 
       {/* Quick Stats Grid */}
-      <div className="px-5 grid grid-cols-2 gap-3">
+      <div className="px-0 grid grid-cols-2 gap-3">
         <StatCard
           icon={Trophy}
           iconColor="text-amber-400"
@@ -221,7 +221,7 @@ export default function Dashboard({ dailyLog, onNavigate }: DashboardProps) {
       </div>
 
       {/* Today's Workout */}
-      <div className="px-5 mt-5">
+      <div className="px-0 mt-5">
         <button
           onClick={() => onNavigate('workout')}
           className="w-full bg-[#141414] border border-[#262626] rounded-2xl p-5 text-left
@@ -283,7 +283,7 @@ export default function Dashboard({ dailyLog, onNavigate }: DashboardProps) {
       </div>
 
       {/* Macros Progress Rings */}
-      <div className="px-5 mt-5">
+      <div className="px-0 mt-5">
         <div className="bg-[#141414] border border-[#262626] rounded-2xl p-5">
           <div className="flex items-center justify-between mb-5">
             <p className="text-sm font-semibold text-white">Macros de hoy</p>
@@ -345,7 +345,7 @@ export default function Dashboard({ dailyLog, onNavigate }: DashboardProps) {
       </div>
 
       {/* Body Fat Goal */}
-      <div className="px-5 mt-5">
+      <div className="px-0 mt-5">
         <button
           onClick={() => onNavigate('body')}
           className="w-full bg-[#141414] border border-[#262626] rounded-2xl p-5 text-left
@@ -383,7 +383,7 @@ export default function Dashboard({ dailyLog, onNavigate }: DashboardProps) {
       </div>
 
       {/* Supplements Checklist */}
-      <div className="px-5 mt-5">
+      <div className="px-0 mt-5">
         <div className="bg-[#141414] border border-[#262626] rounded-2xl p-5">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2.5">

@@ -140,7 +140,7 @@ export default function BodyTracker({ dailyLog, onUpdate }: BodyTrackerProps) {
     v !== null ? `${v}${unit}` : '--';
 
   return (
-    <div className="space-y-4 pb-24">
+    <div className="space-y-4 pt-4 pb-4">
       {/* ──────────── InBody Baseline ──────────── */}
       <section className="rounded-2xl bg-[#141414] border border-[#262626] p-5">
         <div className="flex items-center gap-2 mb-4">

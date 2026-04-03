@@ -47,8 +47,8 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-background pb-24">
-      <div className="max-w-lg mx-auto">
+    <main className="min-h-screen bg-background" style={{ paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'calc(env(safe-area-inset-bottom) + 5.5rem)' }}>
+      <div className="max-w-lg mx-auto px-4">
         {activeTab === 'dashboard' && (
           <Dashboard dailyLog={dailyLog} onNavigate={setActiveTab} />
         )}
