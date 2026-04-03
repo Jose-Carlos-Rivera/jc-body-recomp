@@ -22,9 +22,29 @@ export default function Home() {
     const today = getToday();
     setDailyLog(getDailyLog(today));
 
-    // Register service worker
+    // Register service worker and request push notification permission
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').catch(() => {});
+      navigator.serviceWorker.register('/sw.js').then(() => {
+        // Request notification permission and subscribe
+        import('@/lib/notifications').then(({ subscribeToPush }) => {
+          subscribeToPush().catch(() => {});
+        });
+      }).catch(() => {});
+    }
+
+    // Pull data from Supabase in background
+    import('@/lib/db').then(({ pullAllData }) => {
+      pullAllData().then(() => {
+        // Refresh daily log after pull
+        setDailyLog(getDailyLog(today));
+      }).catch(() => {});
+    });
+
+    // Handle tab parameter from notification clicks
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get('tab');
+    if (tab && ['dashboard', 'nutrition', 'workout', 'body', 'progress'].includes(tab)) {
+      setActiveTab(tab as TabType);
     }
   }, []);
 

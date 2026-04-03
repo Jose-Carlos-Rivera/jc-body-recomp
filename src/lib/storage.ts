@@ -83,6 +83,8 @@ export function saveDailyLog(log: DailyLog): void {
   const logs = getAllDailyLogs();
   logs[log.date] = log;
   setItem(STORAGE_KEYS.DAILY_LOGS, logs);
+  // Sync to Supabase in background
+  import('./db').then(({ syncDailyLog }) => syncDailyLog(log)).catch(() => {});
 }
 
 // Body Measurements
@@ -100,6 +102,8 @@ export function saveMeasurement(measurement: BodyMeasurement): void {
   }
   measurements.sort((a, b) => a.date.localeCompare(b.date));
   setItem(STORAGE_KEYS.BODY_MEASUREMENTS, measurements);
+  // Sync to Supabase in background
+  import('./db').then(({ syncBodyMeasurement }) => syncBodyMeasurement(measurement)).catch(() => {});
 }
 
 // Exercise History (track weights over time)
@@ -135,6 +139,8 @@ export function saveExerciseToHistory(date: string, exercise: ExerciseLog): void
   filtered.push(entry);
   filtered.sort((a, b) => a.date.localeCompare(b.date));
   setItem(STORAGE_KEYS.EXERCISE_HISTORY, filtered);
+  // Sync to Supabase in background
+  import('./db').then(({ syncExerciseHistory }) => syncExerciseHistory(entry)).catch(() => {});
 }
 
 // Streak calculation

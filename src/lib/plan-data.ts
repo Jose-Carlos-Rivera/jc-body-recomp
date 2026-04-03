@@ -35,42 +35,45 @@ export const MACROS_TARGET = {
   water: 3.5, // liters
 };
 
-// Meal plan templates
+// Meal plan templates - Menu nutriADN by Carolina Salazar (Opcion 1 siempre)
 export const MEAL_TEMPLATES = {
   desayuno: {
     time: '07:00',
-    targetCalories: 550,
-    targetProtein: 48,
+    targetCalories: 450,
+    targetProtein: 30,
     foods: [
-      { name: '4 claras + 2 huevos enteros revueltos', protein: 30, carbs: 2, fat: 12, calories: 236, portion: '6 huevos' },
-      { name: 'Avena con agua', protein: 5, carbs: 27, fat: 3, calories: 150, portion: '1/3 taza' },
-      { name: 'Fresas o moras', protein: 1, carbs: 12, fat: 0, calories: 50, portion: '1/2 taza' },
-      { name: 'Almendras', protein: 4, carbs: 3, fat: 9, calories: 104, portion: '15 piezas' },
-      { name: 'Cafe negro sin azucar', protein: 0, carbs: 0, fat: 0, calories: 5, portion: '1 taza' },
+      { name: 'Tostadas Sanissimo', protein: 3, carbs: 24, fat: 2, calories: 120, portion: '3 piezas' },
+      { name: 'Pollo desmenuzado o 2 huevos estrellados', protein: 18, carbs: 1, fat: 10, calories: 160, portion: '60g pollo o 2 huevos' },
+      { name: 'Salsa verde o roja casera', protein: 0, carbs: 3, fat: 0, calories: 12, portion: 'Al gusto' },
+      { name: 'Frijoles cocidos', protein: 4, carbs: 12, fat: 0, calories: 65, portion: '2 cdas' },
+      { name: 'Aguacate', protein: 1, carbs: 4, fat: 8, calories: 80, portion: '1/4 pieza' },
     ],
   },
   comida: {
     time: '13:30',
-    targetCalories: 650,
-    targetProtein: 50,
+    targetCalories: 550,
+    targetProtein: 38,
     foods: [
-      { name: 'Pechuga de pollo a la plancha', protein: 46, carbs: 0, fat: 4, calories: 220, portion: '200g' },
-      { name: 'Arroz integral', protein: 3, carbs: 36, fat: 1, calories: 170, portion: '3/4 taza' },
-      { name: 'Ensalada grande (lechuga, espinaca, pepino, jitomate, brocoli)', protein: 3, carbs: 10, fat: 0, calories: 50, portion: '2 tazas' },
-      { name: 'Aguacate', protein: 1, carbs: 4, fat: 11, calories: 120, portion: '1/2 pequeno' },
-      { name: 'Aceite de oliva', protein: 0, carbs: 0, fat: 10, calories: 90, portion: '1 cdita' },
+      { name: 'Carne molida guisada (picadillo)', protein: 32, carbs: 0, fat: 14, calories: 255, portion: '150g' },
+      { name: 'Calabacita y zanahoria picadas', protein: 2, carbs: 8, fat: 0, calories: 40, portion: '1 taza' },
+      { name: 'Papa picada', protein: 2, carbs: 22, fat: 0, calories: 95, portion: '1 pieza chica' },
+      { name: 'Aceite de oliva', protein: 0, carbs: 0, fat: 5, calories: 45, portion: '1 cdita' },
+      { name: 'Aguacate', protein: 1, carbs: 6, fat: 11, calories: 110, portion: '1/3 pieza' },
+      { name: 'Ensalada (lechuga, tomate, pepino)', protein: 1, carbs: 5, fat: 0, calories: 25, portion: 'Al gusto' },
     ],
   },
   cena: {
     time: '20:00',
-    targetCalories: 550,
-    targetProtein: 47,
+    targetCalories: 500,
+    targetProtein: 40,
     foods: [
-      { name: 'Pescado o pollo', protein: 40, carbs: 0, fat: 4, calories: 200, portion: '200g' },
-      { name: 'Verduras al vapor (brocoli, calabaza, ejote)', protein: 4, carbs: 10, fat: 0, calories: 50, portion: '1 taza' },
-      { name: 'Arroz o papa', protein: 2, carbs: 25, fat: 0, calories: 115, portion: '1/2 taza o 1 papa' },
-      { name: 'Queso cottage o proteina whey', protein: 20, carbs: 5, fat: 2, calories: 120, portion: '100g o 1 scoop' },
-      { name: 'Tortilla integral (opcional)', protein: 3, carbs: 15, fat: 2, calories: 80, portion: '1 pieza' },
+      { name: 'Proteina whey (licuado)', protein: 25, carbs: 3, fat: 2, calories: 130, portion: '1 scoop' },
+      { name: 'Leche vegetal sin azucar', protein: 1, carbs: 2, fat: 3, calories: 35, portion: '1 taza' },
+      { name: 'Platano o fresas/berries', protein: 1, carbs: 25, fat: 0, calories: 100, portion: '1/2 platano o 1 taza' },
+      { name: 'Crema de cacahuate o almendras', protein: 4, carbs: 3, fat: 8, calories: 95, portion: '1 cda' },
+      { name: 'Espinacas, linaza/chia, cacao', protein: 2, carbs: 4, fat: 3, calories: 45, portion: 'Punito + 1 cda' },
+      { name: 'Yogurt griego (snack)', protein: 8, carbs: 5, fat: 3, calories: 70, portion: '1/2 taza' },
+      { name: 'Nueces o almendras (snack)', protein: 3, carbs: 2, fat: 7, calories: 75, portion: '10 piezas' },
     ],
   },
 };
