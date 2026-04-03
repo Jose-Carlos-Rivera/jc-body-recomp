@@ -190,18 +190,17 @@ function MacroBar({
   const over = current > target;
 
   return (
-    <div className="flex-1 min-w-0">
-      <div className="mb-1 flex items-baseline justify-between">
-        <span className="text-[11px] font-medium uppercase tracking-wider text-[#888]">
+    <div className="min-w-0">
+      <div className="mb-1 flex items-baseline justify-between gap-2">
+        <span className="text-[10px] font-medium uppercase tracking-wider text-[#888] shrink-0">
           {label}
         </span>
         <span
-          className={`text-xs font-semibold tabular-nums ${
+          className={`text-[11px] font-semibold tabular-nums whitespace-nowrap ${
             over ? 'text-red-400' : 'text-white'
           }`}
         >
-          {current}
-          <span className="text-[#555]">/{target}{unit}</span>
+          {current}/{target}{unit}
         </span>
       </div>
       <div className="h-2 overflow-hidden rounded-full bg-[#1e1e1e]">
@@ -364,7 +363,7 @@ export default function NutritionTracker({ dailyLog, onUpdate }: NutritionTracke
           <h2 className="text-sm font-semibold text-white">Macros del dia</h2>
         </div>
 
-        <div className="flex gap-4">
+        <div className="grid grid-cols-2 gap-3">
           <MacroBar
             label="Calorias"
             current={totals.calories}

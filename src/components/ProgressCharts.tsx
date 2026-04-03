@@ -22,6 +22,7 @@ import {
   Dumbbell,
   Calendar,
   BarChart3,
+  Bell,
 } from 'lucide-react';
 import {
   getAllDailyLogs,
@@ -761,6 +762,63 @@ export default function ProgressCharts() {
           />
         )}
       </Section>
+
+      {/* ── Push Notifications Toggle ── */}
+      <NotificationToggle />
+    </div>
+  );
+}
+
+/* ───────────────────────────────────────────── */
+/* Notification Activation Button               */
+/* ───────────────────────────────────────────── */
+function NotificationToggle() {
+  const [status, setStatus] = useState<'idle' | 'granted' | 'denied' | 'loading'>('idle');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'Notification' in window) {
+      setStatus(Notification.permission === 'granted' ? 'granted' : 'idle');
+    }
+  }, []);
+
+  const handleActivate = async () => {
+    setStatus('loading');
+    try {
+      const { subscribeToPush } = await import('@/lib/notifications');
+      const sub = await subscribeToPush();
+      setStatus(sub ? 'granted' : 'denied');
+    } catch {
+      setStatus('denied');
+    }
+  };
+
+  return (
+    <div className="rounded-2xl border border-[#262626] bg-[#141414] p-4 mt-2">
+      <div className="flex items-center gap-3 mb-3">
+        <Bell size={18} color={COLORS.accent} />
+        <h3 className="text-sm font-semibold text-white">Notificaciones Push</h3>
+      </div>
+      {status === 'granted' ? (
+        <div className="flex items-center gap-2 text-green-400 text-sm">
+          <div className="w-2 h-2 rounded-full bg-green-400" />
+          Notificaciones activadas - recibiras 3 recordatorios diarios
+        </div>
+      ) : status === 'denied' ? (
+        <p className="text-sm text-red-400">
+          Permiso denegado. Activa las notificaciones en la configuracion de tu navegador.
+        </p>
+      ) : (
+        <button
+          onClick={handleActivate}
+          disabled={status === 'loading'}
+          className="w-full py-3 rounded-xl bg-[#22c55e] text-black font-semibold text-sm hover:bg-[#16a34a] transition-colors disabled:opacity-50"
+        >
+          {status === 'loading' ? 'Activando...' : 'Activar notificaciones (7AM, 1PM, 8PM)'}
+        </button>
+      )}
+      <p className="text-[11px] text-zinc-500 mt-2">
+        Desayuno 7AM - Comida 1PM - Cena 8PM
+      </p>
     </div>
   );
 }
