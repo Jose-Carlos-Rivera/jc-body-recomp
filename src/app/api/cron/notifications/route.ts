@@ -23,17 +23,7 @@ function getNotificationForHour(hour: number): NotificationMessage | null {
     case 7:
       return {
         title: 'Buenos dias Jose Carlos!',
-        body: 'Tu desayuno de hoy: 4 claras + 2 huevos, avena, fresas. No olvides tu creatina y tu cafe.',
-      };
-    case 13:
-      return {
-        title: 'Hora de tu comida!',
-        body: '200g pollo, arroz integral, ensalada grande. Recuerda tomar agua.',
-      };
-    case 20:
-      return {
-        title: 'Buenas noches!',
-        body: 'Registra tu cena y tu entrenamiento de hoy. Toma tu magnesio antes de dormir.',
+        body: 'Tu desayuno: Chilaquiles con tostadas Sanissimo, pollo/huevos, salsa, frijoles y aguacate. No olvides tu creatina!',
       };
     default:
       return null;

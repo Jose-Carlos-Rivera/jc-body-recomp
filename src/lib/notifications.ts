@@ -59,9 +59,55 @@ export async function subscribeToPush(): Promise<PushSubscription | null> {
     // Persist the subscription to Supabase
     await savePushSubscription(subscription.toJSON());
 
+    // Schedule local notifications for the day
+    scheduleLocalNotifications();
+
     return subscription;
   } catch (err) {
     console.error('[notifications] subscribeToPush failed', err);
     return null;
+  }
+}
+
+/**
+ * Schedule local notifications for meal reminders.
+ * Vercel Hobby only supports 1 daily cron (7AM push from server).
+ * The 1PM and 8PM reminders are scheduled locally.
+ */
+function scheduleLocalNotifications() {
+  if (typeof window === 'undefined' || Notification.permission !== 'granted') return;
+
+  const now = new Date();
+  const notifications = [
+    {
+      hour: 13, minute: 0,
+      title: 'Hora de tu comida!',
+      body: 'Picadillo con papa, calabacita, zanahoria y ensalada. Recuerda tomar agua.',
+    },
+    {
+      hour: 20, minute: 0,
+      title: 'Buenas noches Jose Carlos!',
+      body: 'Prepara tu licuado de proteina con fruta y crema de cacahuate. Toma tu magnesio.',
+    },
+  ];
+
+  for (const n of notifications) {
+    const target = new Date(now);
+    target.setHours(n.hour, n.minute, 0, 0);
+    if (target <= now) continue; // Already past this time today
+
+    const delay = target.getTime() - now.getTime();
+    setTimeout(() => {
+      if (Notification.permission === 'granted') {
+        navigator.serviceWorker.ready.then((reg) => {
+          reg.showNotification(n.title, {
+            body: n.body,
+            icon: '/icons/icon-192.png',
+            badge: '/icons/icon-192.png',
+            tag: 'local-meal-reminder',
+          });
+        });
+      }
+    }, delay);
   }
 }
