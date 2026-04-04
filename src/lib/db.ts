@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { supabase, getCurrentUserId } from '@/lib/supabase';
 import { DailyLog, BodyMeasurement } from '@/lib/types';
 import {
   ExerciseHistoryEntry,
@@ -14,14 +14,17 @@ import {
 // ---------------------------------------------------------------------------
 export async function syncDailyLog(log: DailyLog): Promise<void> {
   if (!supabase) return;
+  const userId = await getCurrentUserId();
+  if (!userId) return;
   try {
     await supabase.from('daily_logs').upsert(
       {
+        user_id: userId,
         date: log.date,
         data: log,
         updated_at: new Date().toISOString(),
       },
-      { onConflict: 'date' }
+      { onConflict: 'user_id,date' }
     );
   } catch (err) {
     console.error('[db] syncDailyLog failed', err);
@@ -33,14 +36,17 @@ export async function syncDailyLog(log: DailyLog): Promise<void> {
 // ---------------------------------------------------------------------------
 export async function syncBodyMeasurement(measurement: BodyMeasurement): Promise<void> {
   if (!supabase) return;
+  const userId = await getCurrentUserId();
+  if (!userId) return;
   try {
     await supabase.from('body_measurements').upsert(
       {
+        user_id: userId,
         date: measurement.date,
         data: measurement,
         updated_at: new Date().toISOString(),
       },
-      { onConflict: 'date' }
+      { onConflict: 'user_id,date' }
     );
   } catch (err) {
     console.error('[db] syncBodyMeasurement failed', err);
@@ -52,15 +58,18 @@ export async function syncBodyMeasurement(measurement: BodyMeasurement): Promise
 // ---------------------------------------------------------------------------
 export async function syncExerciseHistory(entry: ExerciseHistoryEntry): Promise<void> {
   if (!supabase) return;
+  const userId = await getCurrentUserId();
+  if (!userId) return;
   try {
     await supabase.from('exercise_history').upsert(
       {
+        user_id: userId,
         date: entry.date,
         exercise_name: entry.exerciseName,
         data: entry,
         updated_at: new Date().toISOString(),
       },
-      { onConflict: 'date,exercise_name' }
+      { onConflict: 'user_id,date,exercise_name' }
     );
   } catch (err) {
     console.error('[db] syncExerciseHistory failed', err);
@@ -72,9 +81,11 @@ export async function syncExerciseHistory(entry: ExerciseHistoryEntry): Promise<
 // ---------------------------------------------------------------------------
 export async function savePushSubscription(subscription: PushSubscriptionJSON): Promise<void> {
   if (!supabase) return;
+  const userId = await getCurrentUserId();
   try {
     await supabase.from('push_subscriptions').upsert(
       {
+        user_id: userId,
         endpoint: subscription.endpoint,
         keys: subscription.keys,
         created_at: new Date().toISOString(),
@@ -88,9 +99,12 @@ export async function savePushSubscription(subscription: PushSubscriptionJSON): 
 
 // ---------------------------------------------------------------------------
 // Pull all data from Supabase and merge with localStorage
+// RLS ensures only the authenticated user's data is returned
 // ---------------------------------------------------------------------------
 export async function pullAllData(): Promise<void> {
   if (!supabase) return;
+  const userId = await getCurrentUserId();
+  if (!userId) return;
 
   try {
     // --- Daily logs ---
@@ -104,11 +118,8 @@ export async function pullAllData(): Promise<void> {
       for (const row of remoteLogs) {
         const remoteDate = row.date as string;
         const remoteLog = row.data as DailyLog;
-        const remoteUpdated = new Date(row.updated_at as string).getTime();
-
         const localLog = localLogs[remoteDate];
-        // Supabase wins if no local version or remote is newer
-        if (!localLog || remoteUpdated > Date.now() - 60_000) {
+        if (!localLog) {
           saveDailyLog(remoteLog);
         }
       }
@@ -144,7 +155,6 @@ export async function pullAllData(): Promise<void> {
         const key = `${row.date}|${row.exercise_name}`;
         if (!localKeys.has(key)) {
           const entry = row.data as ExerciseHistoryEntry;
-          // Save directly to localStorage via the storage module
           const history = getExerciseHistory();
           history.push(entry);
           history.sort((a, b) => a.date.localeCompare(b.date));

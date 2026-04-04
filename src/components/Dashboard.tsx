@@ -17,6 +17,8 @@ import type { DailyLog, TabType } from '@/lib/types';
 interface DashboardProps {
   dailyLog: DailyLog;
   onNavigate: (tab: TabType) => void;
+  userName?: string;
+  onLogout?: () => void;
 }
 
 // --- Circular progress SVG ---
@@ -137,7 +139,7 @@ function BodyFatBar({ current, target, start }: { current: number; target: numbe
   );
 }
 
-export default function Dashboard({ dailyLog, onNavigate }: DashboardProps) {
+export default function Dashboard({ dailyLog, onNavigate, userName = 'Jose Carlos', onLogout }: DashboardProps) {
   const todayPlan = useMemo(() => getTodayPlan(), []);
   const streak = useMemo(() => getStreak(), []);
 
@@ -179,11 +181,21 @@ export default function Dashboard({ dailyLog, onNavigate }: DashboardProps) {
   return (
     <div className="bg-[#0a0a0a] text-white pb-4">
       {/* Header */}
-      <div className="pt-4 pb-4">
-        <p className="text-neutral-500 text-sm capitalize">{dateStr}</p>
-        <h1 className="text-2xl font-bold mt-1">
-          Hola, Jose Carlos
-        </h1>
+      <div className="pt-4 pb-4 flex items-start justify-between">
+        <div>
+          <p className="text-neutral-500 text-sm capitalize">{dateStr}</p>
+          <h1 className="text-2xl font-bold mt-1">
+            Hola, {userName.split(' ')[0]}
+          </h1>
+        </div>
+        {onLogout && (
+          <button
+            onClick={onLogout}
+            className="mt-2 text-xs text-zinc-500 hover:text-zinc-300 transition-colors px-3 py-1 rounded-lg border border-[#262626]"
+          >
+            Salir
+          </button>
+        )}
       </div>
 
       {/* Quick Stats Grid */}
